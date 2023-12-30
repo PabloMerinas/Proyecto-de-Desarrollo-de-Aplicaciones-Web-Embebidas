@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Gestión de Comentarios</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container mt-4">
+		<h2 th:text="#{commentTableTitle.message}"></h2>
+
+		<!-- Tabla de Usuarios -->
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th th:text=#{creator.message}></th>
+					<th th:text=#{creationDate.message}></th>
+					<th th:text=#{content.message}></th>
+					<th th:text=#{actions.message}></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${comentarios == null || comentarios.isEmpty()}">
+					<td colspan="4" th:valut="#{noComments.message}"></td>
+				</tr>
+				<tr th:each="comentario : ${comentarios}"
+					th:if="${comentario.usuario != null}">
+					<td th:text="${comentario.usuario.username}"></td>
+					<td th:text="${comentario.fechaCreacion}"></td>
+					<td th:text="${comentario.contenido}"></td>
+					<td><a
+						th:href="@{/admin/eliminarComentario/{id}(id=${comentario.id})}"
+						class="btn btn-danger btn-sm" th:text="#{delete.message}"></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

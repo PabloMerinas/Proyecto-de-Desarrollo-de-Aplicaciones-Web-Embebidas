@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Fragmento de Formulario de Inicio de Sesión</title>
+<link rel="canonical"
+	href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+</head>
+<body>
+	<div th:fragment="loginFormFragment">
+		<div th:if="${isLoggedIn}">
+			<a th:if="${isAdmin}" th:href="@{/admin/home}"
+				th:text="#{goToAdminPage.message}"></a> <a th:unless="${isAdmin}"
+				th:href="@{/user/home}" th:text="#{goToYourPage.message}"></a>
+			<p th:text="#{alreadyLoggedIn.message}"></p>
+			<div th:replace="~{fragments/logout-fragment :: logout-link}"></div>
+		</div>
+		<div th:unless="${isLoggedIn}">
+			<div th:if="${param.error}" th:text="#{invalidCredentials.message}"></div>
+			<form th:action="@{/login}" method="post">
+				<div>
+					<label for="username" th:text="#{userLabel.message} + ':'"></label>
+					<input type="text" id="username" name="username" required />
+				</div>
+				<div>
+					<label for="password" th:text="#{passwordLabel.message} + ':'"></label>
+					<input type="password" id="password" name="password" required />
+				</div>
+				<div>
+					<button type="submit" th:text="#{loginButton.message}"></button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
+

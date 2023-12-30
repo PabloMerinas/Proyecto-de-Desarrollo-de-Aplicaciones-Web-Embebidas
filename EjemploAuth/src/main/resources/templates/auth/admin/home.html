@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Página de Administrador</title>
+<!-- Incluir Bootstrap CSS desde CDN -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container mt-4">
+		<div th:replace="~{fragments/header :: headerFragment}"></div>
+		<h1 th:text="#{welcome.message} + ','">
+			<span th:text="${session.username}"></span>!
+		</h1>
+		<p th:text="#{websiteAdminMessage.message}"></p>
+		<!-- Fragmento de cierre de sesión -->
+		<div th:replace="~{fragments/logout-fragment :: logout-link}"></div>
+		<!-- Navegación -->
+		<nav class="nav nav-pills">
+			<a class="nav-item nav-link" th:href="@{/admin/usuarios}"
+				th:text="#{userManagement.message}"></a> <a
+				class="nav-item nav-link" th:href="@{/admin/comentarios}"
+				th:text="#{commentManagement.message}"></a> <a
+				class="nav-item nav-link" th:href="@{/admin/estadisticas}"
+				th:text="#{statistics.message}"></a>
+		</nav>
+
+		<!-- Contenido -->
+		<div class="container mt-4" th:if="${adminContent != null}">
+			<div th:replace="~{${adminContent}}"></div>
+		</div>
+
+		<div th:replace="~{fragments/footer :: footerFragment}"></div>
+	</div>
+	<!-- Opcional: Incluir JavaScript de Bootstrap y sus dependencias -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

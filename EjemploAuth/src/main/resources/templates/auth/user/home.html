@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Página de usuario</title>
+<!-- Agregar enlaces a las hojas de estilo de Bootstrap -->
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+</head>
+
+<body>
+	<div class="container">
+		<header th:replace="~{fragments/header :: headerFragment}"></header>
+
+		<h1 th:text="#{welcome.user.message(${username})}"></h1>
+
+		<p th:text="#{userOnlyPage.message}"></p>
+		<div th:replace="~{fragments/logout-fragment :: logout-link}"></div>
+
+		<!-- Utilizar el sistema de grillas de Bootstrap -->
+		<div class="row">
+			<div class="col-md-8">
+				<!-- Listado de comentarios -->
+				<h2 th:text="#{comments.list.message}"></h2>
+				<div th:replace="~{fragments/comentarios :: comentarioFragment}"></div>
+
+				<!-- Aquí puedes insertar el código para mostrar los comentarios -->
+			</div>
+			<div class="col-md-4">
+				<!-- Formulario para agregar comentarios -->
+				<h2 th:text="#{addComment.message}"></h2>
+				<div
+					th:replace="~{fragments/comentarios :: enlaceformularioComentarioFragment}"></div>
+				<form action="#" th:action="@{/user/home}" method="get">
+					<h2 th:text="#{filter.by.user.message}"></h2>
+					<select name="usuarioId">
+						<option value="" th:text="#{all.users.message}"></option>
+						<option th:each="usuario : ${usuarios}" th:value="${usuario.id}"
+							th:text="${usuario.username}"></option>
+					</select>
+					<button type="submit" th:text="#{filter.button.message}"></button>
+				</form>
+				<form th:action="@{/user/home}" method="get">
+					<h2 th:text="#{search.by.words.message}"></h2>
+					<input type="text" name="keyword" th:placeholder="#{keyword.message}"
+						th:value="${keyword}">
+					<button type="submit" th:text="#{filter.button.message}"></button>
+				</form>
+			</div>
+		</div>
+		<div th:replace="~{fragments/footer :: footerFragment}"></div>
+
+	</div>
+
+	<!-- Agregar scripts de Bootstrap (jQuery y Popper.js son necesarios) -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

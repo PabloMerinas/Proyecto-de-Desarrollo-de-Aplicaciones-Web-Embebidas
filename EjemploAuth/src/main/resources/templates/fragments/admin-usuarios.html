@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Gestión de Usuarios</title>
+</head>
+<body>
+	<div class="container mt-4">
+		<h2 th:text="#{usersTableTitle.message}"></h2>
+
+		<!-- Tabla de Usuarios -->
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th th:text="#{username.message}"></th>
+					<th th:text="#{password.message}"></th>
+					<th th:text="#{actions.message}"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<form th:action="@{/admin/anadirUsuario}" method="post">
+					<input type="hidden" th:name="${_csrf.parameterName}"
+						th:value="${_csrf.token}" />
+					<tr>
+						<td></td>
+						<td><input type="text" name="username"
+							th:placeholder="#{username.message}"></td>
+						<td><input type="password" name="password"
+							th:placeholder="#{password.message}" minlength="8" required></td>
+						<td>
+							<button type="submit" class="btn btn-primary btn-sm"
+								th:text="#{addUser.message}"></button>
+						</td>
+					</tr>
+
+				</form>
+
+				<tr th:each="usuario : ${usuarios}">
+					<td th:text="${usuario.id}"></td>
+					<form th:action="@{'/admin/editarUsuario/' + ${usuario.id}}"
+						method="post">
+						<input type="hidden" th:name="${_csrf.parameterName}"
+							th:value="${_csrf.token}" />
+						<td><input type="text" name="username"
+							th:value="${usuario.username}"
+							th:placeholder="#{username.message}" required></td>
+						<td><input type="text" name="password"
+							th:placeholder="${usuario.password}" minlength="8" required>
+						</td>
+						<td>
+							<button type="submit" class="btn btn-primary btn-sm"
+								th:text="#{saveChanges.message}"></button> <a
+							th:href="@{/admin/eliminarUsuario/{id}(id=${usuario.id})}"
+							class="btn btn-danger btn-sm" th:text="#{delete.message}"></a>
+
+						</td>
+					</form>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
